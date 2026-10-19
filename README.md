@@ -1,19 +1,76 @@
-Explicacion del servicio de base de batos (services/publicaciones.js)
+# 📝 App de Publicaciones
 
-Este archivo centraliza toda la interacción con la API de Supabase, aislando la lógica de la base de datos de los componentes visuales de React. A continuación, se detalla el funcionamiento de las cuatro operaciones del CRUD implementadas:
+Aplicación web para crear, ver, editar y eliminar publicaciones, desarrollada con **React** y **Supabase** como backend. Incluye validación de formularios, manejo de estados de carga y error, y navegación entre páginas.
 
-1. obtenerPublicacion() (Lectura)
-* ¿Qué hace? Realiza una petición de tipo SELECT a la tabla publicaciones para traer todas las filas existentes. Utiliza el modificador .order("creado_en", { ascending: false }) para asegurarse de que los datos vengan ordenados cronológicamente, mostrando las publicaciones más recientes al principio.
-* ¿Dónde se dispara? Se ejecuta dentro del hook useEffect al montar la página principal (InicioPagina.jsx). Al recibir la respuesta, guarda el array de publicaciones en el estado local lista para renderizar las tarjetas en pantalla.
+## ✨ Características
 
-2. obtenerPublicacionPorId(id) / crearPublicacion(datos) (Creación)
-* ¿Qué hace? Toma el objeto con el titulo y contenido validado por React Hook Form y realiza un INSERT en la tabla. Incluye el método .select() al final para forzar a Supabase a retornar el objeto exacto que se acaba de guardar con su ID asignado.
-* ¿Dónde se dispara?: Se dispara al enviar el formulario híbrido (FormularioPublicacion.jsx) mediante el evento onSubmit, únicamente cuando la aplicación detecta que la URL es /nueva (es decir, el parámetro id de la ruta es undefined).
+- **CRUD completo:** crear, listar, editar y eliminar publicaciones.
+- **Formulario reutilizable** para crear y editar, con validación de campos obligatorios usando React Hook Form.
+- **Estados de interfaz cuidados:** indicadores de carga, mensajes de error, botón de reintentar y mensaje cuando no hay publicaciones.
+- **Navegación con React Router**, incluyendo rutas dinámicas (`/editar/:id`) y una página 404 personalizada.
+- **Estilos modulares** con CSS Modules, sin conflictos de nombres entre componentes.
+- **Capa de servicios** separada (`services/Publicaciones`) para aislar la comunicación con la base de datos.
 
-3. actualizarPublicacion(id, cambios) (Actualización)
-* ¿Qué hace? Recibe el identificador único del elemento y un objeto con las modificaciones hechas por el usuario. Ejecuta un comando UPDATE filtrando estrictamente con un .eq("id", id) para alterar solo esa fila, usando también .select() para confirmar los datos actualizados.
-* ¿Dónde se dispara? Se ejecuta en la función onSubmit del mismo formulario híbrido (FormularioPublicacion.jsx), pero se activa exclusivamente si la URL contiene un ID válido (ej. /editar/15), lo que significa que el componente está operando en "modo edición".
+## 🛠️ Tecnologías
 
-4. borrarPublicacion(id) o eliminarPublicacion(id) (Baja - D de CRUD)
-* ¿Qué hace? Envía una instrucción DELETE orientada por el identificador del registro mediante el filtro .eq("id", id). Esto remueve la publicación de la base de datos de forma permanente.
-* ¿Dónde se dispara? Se ejecuta directamente desde el componente individual de la tarjeta (CardPublicacion.jsx). Se acciona al hacer clic en el botón "Borrar", justo después de que el usuario confirma la acción mediante el cuadro de diálogo nativo window.confirm(). Tras completarse en red, se le avisa al componente padre para que remueva el elemento del estado de React de forma instantánea.
+| Tecnología | Uso |
+|---|---|
+| React | Interfaz de usuario |
+| Vite | Entorno de desarrollo y build |
+| React Router | Enrutamiento |
+| React Hook Form | Manejo y validación de formularios |
+| Supabase | Base de datos y backend |
+| CSS Modules | Estilos con alcance local |
+
+## 📁 Estructura del proyecto
+src/
+├── components/
+│ └── CardPublicacion/ # Tarjeta de cada publicación
+├── pages/
+│ ├── InicioPagina/ # Listado de publicaciones
+│ ├── FormularioPublicacion/# Crear / editar publicación
+│ └── NoEncontrada/ # Página 404
+├── services/
+│ └── Publicaciones.js # Funciones de acceso a Supabase
+└── main.jsx
+
+## 🚀 Instalación y uso
+
+1. Clonar el repositorio:
+```bash
+   git clone https://github.com/tu-usuario/tu-repositorio.git
+   cd tu-repositorio
+```
+2. Instalar dependencias:
+```bash
+   npm install
+```
+3. Crear un archivo `.env` en la raíz con tus credenciales de Supabase:
+```env
+   VITE_SUPABASE_URL=tu_url_de_supabase
+   VITE_SUPABASE_ANON_KEY=tu_clave_anonima
+```
+4. Crear en Supabase una tabla `publicaciones` con las columnas `id`, `titulo` y `contenido`.
+5. Iniciar el servidor de desarrollo:
+```bash
+   npm run dev
+```
+   La app queda disponible en `http://localhost:5173`.
+
+## 🧠 Lo que practiqué en este proyecto
+
+- Integración de React con un backend como servicio (Supabase).
+- Formularios controlados con validación declarativa.
+- Manejo de efectos y estados asíncronos con `useEffect` y `useState`.
+- Organización del código en páginas, componentes y servicios.
+
+## 🔮 Próximas mejoras
+
+- Autenticación de usuarios.
+- Búsqueda y paginación de publicaciones.
+- Confirmación antes de eliminar.
+- Despliegue en Vercel o Netlify.
+
+## 👤 Autor
+
+**Guillermo Sanchez Apaza** · [LinkedIn](https://www.linkedin.com/in/guille-apaza-9569b0355/) · [GitHub](https://github.com/Guillermovgs)
