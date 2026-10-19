@@ -1,8 +1,3 @@
-url a utilizar
-VITE_SUPABASE_URL=https://qefzivqxwnyxlfbamgxe.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFlZnppdnF4d255eGxmYmFtZ3hlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk2NDA1NjksImV4cCI6MjEwNTIxNjU2OX0.mqD7JICfZyhc3IUMbn58C6VOCa5lbvPP-ThLRowQyDE
-
-
 Explicacion del servicio de base de batos (services/publicaciones.js)
 
 Este archivo centraliza toda la interacción con la API de Supabase, aislando la lógica de la base de datos de los componentes visuales de React. A continuación, se detalla el funcionamiento de las cuatro operaciones del CRUD implementadas:
